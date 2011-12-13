@@ -27,6 +27,16 @@ describe ActiveAdmin::Dashboards::DashboardController do
     before { ActiveAdmin::Dashboards.clear_all_sections! }
     let(:controller){ Admin::DashboardController.new }
     
+    context "when :if not specified" do
+      before do
+        @section = ActiveAdmin::Dashboards.add_section('Stats').last
+      end
+      
+      it "should include section" do
+        controller.send(:find_sections).should include(@section)
+      end
+    end
+    
     context "when :if option specified as a method" do
       before do
         @section = ActiveAdmin::Dashboards.add_section('Secret Codes', :if => :i_am_awesome?).last
